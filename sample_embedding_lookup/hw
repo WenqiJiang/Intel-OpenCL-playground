@@ -1,0 +1,31 @@
+Warning: Command has been deprecated. Please use -board=<value> instead of --board <value>
+aoc: Environment checks are completed successfully.
+aoc: Cached files in /var/tmp/aocl/ may be used to reduce compilation time
+You are now compiling the full flow!!
+aoc: Selected target board pac_s10_dc
+aoc: Running OpenCL parser....
+aoc: OpenCL parser completed successfully.
+aoc: Linking Object files....
+aoc: Optimizing and doing static analysis of code...
+aoc: Linking with IP library ...
+Checking if memory usage is larger than 100%
+
+!===========================================================================
+! The report below may be inaccurate. A more comprehensive           
+! resource usage report can be found at embedding_lookup/reports/report.html    
+!===========================================================================
+
++--------------------------------------------------------------------+
+; Estimated Resource Usage Summary                                   ;
++----------------------------------------+---------------------------+
+; Resource                               + Usage                     ;
++----------------------------------------+---------------------------+
+; Logic utilization                      ;   23%                     ;
+; ALUTs                                  ;   15%                     ;
+; Dedicated logic registers              ;   10%                     ;
+; Memory blocks                          ;    7%                     ;
+; DSP blocks                             ;    0%                     ;
++----------------------------------------+---------------------------;
+aoc: First stage compilation completed successfully.
+Compiling for FPGA. This process may take a long time, please be patient.
+aoc: Hardware generation completed successfully.

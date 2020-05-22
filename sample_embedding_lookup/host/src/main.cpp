@@ -146,7 +146,7 @@ bool init_opencl() {
 
   // Create the program for all device. Use the first device as the
   // representative device (assuming all device are of the same type).
-  std::string binary_file = getBoardBinaryFile("vector_add", device[0]);
+  std::string binary_file = getBoardBinaryFile("embedding", device[0]);
   printf("Using AOCX: %s\n", binary_file.c_str());
   program = createProgramFromBinary(context, binary_file.c_str(), device, num_devices);
 
@@ -255,16 +255,17 @@ void init_problem() {
     for (int item = 0; item < BATCH_SIZE; item++) {
       int idx = access_idx[item];
       // 3 tables
-      ref_output[i][item] = 0;
+      int result = 0;
       for (int count = 0; count < DATA_SIZE_0; count++) {
-        ref_output[i][item] += input_a[ADDR_START_TABLE_0 + idx * DATA_SIZE_0 + count];
+        result += input_a[i][ADDR_START_TABLE_0 + idx * DATA_SIZE_0 + count];
       }
       for (int count = 0; count < DATA_SIZE_1; count++) {
-        ref_output[i][item] += input_a[ADDR_START_TABLE_1 + idx * DATA_SIZE_1 + count];
+        result += input_a[i][ADDR_START_TABLE_1 + idx * DATA_SIZE_1 + count];
       }
       for (int count = 0; count < DATA_SIZE_2; count++) {
-        ref_output[i][item] += input_a[ADDR_START_TABLE_2 + idx * DATA_SIZE_2 + count];
+        result += input_a[i][ADDR_START_TABLE_2 + idx * DATA_SIZE_2 + count];
       }
+      ref_output[i][item] = result;
     }
 
 #else
@@ -328,8 +329,8 @@ void run() {
     status = clSetKernelArg(kernel[i], argi++, sizeof(cl_mem), &input_a_buf[i]);
     checkError(status, "Failed to set argument %d", argi - 1);
 
-    status = clSetKernelArg(kernel[i], argi++, sizeof(cl_mem), &input_b_buf[i]);
-    checkError(status, "Failed to set argument %d", argi - 1);
+    // status = clSetKernelArg(kernel[i], argi++, sizeof(cl_mem), &input_b_buf[i]);
+    // checkError(status, "Failed to set argument %d", argi - 1);
 
     status = clSetKernelArg(kernel[i], argi++, sizeof(cl_mem), &output_buf[i]);
     checkError(status, "Failed to set argument %d", argi - 1);

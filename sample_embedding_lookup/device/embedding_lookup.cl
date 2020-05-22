@@ -23,7 +23,6 @@
 
  // ACL kernel for adding two input vectors
 __kernel void vector_add(__global const D_TYPE* x, 
-                         __global const D_TYPE* y, 
                          __global D_TYPE* z)
 {
     // get index of the work item
@@ -47,15 +46,15 @@ __kernel void vector_add(__global const D_TYPE* x,
             // 3 tables
             for (int count = 0; count < DATA_SIZE_0; count++) {
                 local_buffer[VECTOR_START_0 + local_start_idx + count] = 
-                    input_a[ADDR_START_TABLE_0 + idx * DATA_SIZE_0 + count];
+                    x[ADDR_START_TABLE_0 + idx * DATA_SIZE_0 + count];
             }
             for (int count = 0; count < DATA_SIZE_1; count++) {
                 local_buffer[VECTOR_START_1 + local_start_idx + count] = 
-                    input_a[ADDR_START_TABLE_1 + idx * DATA_SIZE_1 + count];
+                    x[ADDR_START_TABLE_1 + idx * DATA_SIZE_1 + count];
             }
             for (int count = 0; count < DATA_SIZE_2; count++) {
                 local_buffer[VECTOR_START_2 + local_start_idx + count] = 
-                    input_a[ADDR_START_TABLE_2 + idx * DATA_SIZE_2 + count];
+                    x[ADDR_START_TABLE_2 + idx * DATA_SIZE_2 + count];
             }
         }
     }
@@ -65,8 +64,8 @@ __kernel void vector_add(__global const D_TYPE* x,
 
         int local_start_idx = item * INPUT_SIZE;
         D_TYPE result = 0;
-        #pragma unroll
-        for (int count = 0; count < INPUT_SIZE) {
+        #pragma unroll 
+        for (int count = 0; count < INPUT_SIZE; count++) {
             result += local_buffer[local_start_idx + count];
         }
         output[item] = result;
