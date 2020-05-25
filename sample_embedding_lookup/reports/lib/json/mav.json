@@ -1,0 +1,1627 @@
+{
+  "nodes":
+  [
+    {
+      "type":"kernel"
+      , "id":2
+      , "name":"vector_add"
+      , "children":
+      [
+        {
+          "type":"bb"
+          , "id":3
+          , "name":"vector_add.B0"
+          , "details":
+          [
+            {
+              "type":"table"
+              , "Latency":"2"
+            }
+          ]
+        }
+        , {
+          "type":"bb"
+          , "id":4
+          , "name":"vector_add.B1"
+          , "details":
+          [
+            {
+              "type":"table"
+              , "Latency":"0"
+            }
+          ]
+        }
+        , {
+          "type":"bb"
+          , "id":5
+          , "name":"vector_add.B2"
+          , "details":
+          [
+            {
+              "type":"table"
+              , "Latency":"11"
+              , "II":"1"
+              , "Subloops":"Yes"
+              , "Pipelined":"Yes"
+              , "Fmax Bottlenecks":"No"
+              , "Loop Info":"Entry to loop. "
+              , "Loops To":"6"
+            }
+          ]
+        }
+        , {
+          "type":"bb"
+          , "id":6
+          , "name":"vector_add.B3"
+          , "details":
+          [
+            {
+              "type":"table"
+              , "Latency":"1"
+              , "II":"1"
+              , "Subloops":"Yes"
+              , "Pipelined":"Yes"
+              , "Fmax Bottlenecks":"No"
+              , "Loop Info":"Exit which branches back to loop. "
+            }
+          ]
+        }
+        , {
+          "type":"bb"
+          , "id":7
+          , "name":"vector_add.B4"
+          , "children":
+          [
+            {
+              "type":"inst"
+              , "id":12
+              , "name":"Load"
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                    , "line":51
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "Width":"128 bits"
+                  , "Type":"Burst-coalesced cached"
+                  , "Stall-free":"No"
+                  , "Start Cycle":"153"
+                  , "Latency":"196"
+                  , "Reference":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"See %L for more information"
+                      , "links":
+                      [
+                        {
+                          "guide":"Best Practices Guide : Load-Store Units"
+                          , "link":"https://www.altera.com/documentation/mwh1391807516407.html#yeo1491314105959"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"inst"
+              , "id":13
+              , "name":"Load"
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                    , "line":55
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "Width":"256 bits"
+                  , "Type":"Burst-coalesced cached"
+                  , "Stall-free":"No"
+                  , "Start Cycle":"228"
+                  , "Latency":"208"
+                  , "Reference":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"See %L for more information"
+                      , "links":
+                      [
+                        {
+                          "guide":"Best Practices Guide : Load-Store Units"
+                          , "link":"https://www.altera.com/documentation/mwh1391807516407.html#yeo1491314105959"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"inst"
+              , "id":14
+              , "name":"Load"
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                    , "line":59
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "Width":"512 bits"
+                  , "Type":"Burst-coalesced cached"
+                  , "Stall-free":"No"
+                  , "Start Cycle":"205"
+                  , "Latency":"231"
+                  , "Reference":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"See %L for more information"
+                      , "links":
+                      [
+                        {
+                          "guide":"Best Practices Guide : Load-Store Units"
+                          , "link":"https://www.altera.com/documentation/mwh1391807516407.html#yeo1491314105959"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"inst"
+              , "id":15
+              , "name":"Store"
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                    , "line":50
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "Width":"1024 bits"
+                  , "Type":"Local-pipelined"
+                  , "Stall-free":"No"
+                  , "Stores to":"embedding_local"
+                  , "Start Cycle":"356"
+                  , "Latency":"31"
+                  , "Reference":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"See %L for more information"
+                      , "links":
+                      [
+                        {
+                          "guide":"Best Practices Guide : Load-Store Units"
+                          , "link":"https://www.altera.com/documentation/mwh1391807516407.html#yeo1491314105959"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"inst"
+              , "id":16
+              , "name":"Store"
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                    , "line":50
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "Width":"32 bits"
+                  , "Type":"Local-pipelined"
+                  , "Stall-free":"No"
+                  , "Stores to":"embedding_local"
+                  , "Start Cycle":"387"
+                  , "Latency":"31"
+                  , "Reference":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"See %L for more information"
+                      , "links":
+                      [
+                        {
+                          "guide":"Best Practices Guide : Load-Store Units"
+                          , "link":"https://www.altera.com/documentation/mwh1391807516407.html#yeo1491314105959"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"inst"
+              , "id":17
+              , "name":"Store"
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                    , "line":50
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "Width":"32 bits"
+                  , "Type":"Local-pipelined"
+                  , "Stall-free":"No"
+                  , "Stores to":"embedding_local"
+                  , "Start Cycle":"418"
+                  , "Latency":"31"
+                  , "Reference":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"See %L for more information"
+                      , "links":
+                      [
+                        {
+                          "guide":"Best Practices Guide : Load-Store Units"
+                          , "link":"https://www.altera.com/documentation/mwh1391807516407.html#yeo1491314105959"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"inst"
+              , "id":18
+              , "name":"Store"
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                    , "line":50
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "Width":"32 bits"
+                  , "Type":"Local-pipelined"
+                  , "Stall-free":"No"
+                  , "Stores to":"embedding_local"
+                  , "Start Cycle":"449"
+                  , "Latency":"31"
+                  , "Reference":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"See %L for more information"
+                      , "links":
+                      [
+                        {
+                          "guide":"Best Practices Guide : Load-Store Units"
+                          , "link":"https://www.altera.com/documentation/mwh1391807516407.html#yeo1491314105959"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"inst"
+              , "id":19
+              , "name":"Store"
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                    , "line":54
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "Width":"128 bits"
+                  , "Type":"Local-pipelined"
+                  , "Stall-free":"No"
+                  , "Stores to":"embedding_local"
+                  , "Start Cycle":"449"
+                  , "Latency":"31"
+                  , "Reference":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"See %L for more information"
+                      , "links":
+                      [
+                        {
+                          "guide":"Best Practices Guide : Load-Store Units"
+                          , "link":"https://www.altera.com/documentation/mwh1391807516407.html#yeo1491314105959"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"inst"
+              , "id":20
+              , "name":"Store"
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                    , "line":54
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "Width":"256 bits"
+                  , "Type":"Local-pipelined"
+                  , "Stall-free":"No"
+                  , "Stores to":"embedding_local"
+                  , "Start Cycle":"449"
+                  , "Latency":"31"
+                  , "Reference":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"See %L for more information"
+                      , "links":
+                      [
+                        {
+                          "guide":"Best Practices Guide : Load-Store Units"
+                          , "link":"https://www.altera.com/documentation/mwh1391807516407.html#yeo1491314105959"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"inst"
+              , "id":21
+              , "name":"Store"
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                    , "line":50
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "Width":"64 bits"
+                  , "Type":"Local-pipelined"
+                  , "Stall-free":"No"
+                  , "Stores to":"embedding_local"
+                  , "Start Cycle":"449"
+                  , "Latency":"31"
+                  , "Reference":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"See %L for more information"
+                      , "links":
+                      [
+                        {
+                          "guide":"Best Practices Guide : Load-Store Units"
+                          , "link":"https://www.altera.com/documentation/mwh1391807516407.html#yeo1491314105959"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"inst"
+              , "id":22
+              , "name":"Store"
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                    , "line":50
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "Width":"512 bits"
+                  , "Type":"Local-pipelined"
+                  , "Stall-free":"No"
+                  , "Stores to":"embedding_local"
+                  , "Start Cycle":"449"
+                  , "Latency":"31"
+                  , "Reference":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"See %L for more information"
+                      , "links":
+                      [
+                        {
+                          "guide":"Best Practices Guide : Load-Store Units"
+                          , "link":"https://www.altera.com/documentation/mwh1391807516407.html#yeo1491314105959"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"inst"
+              , "id":23
+              , "name":"Store"
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                    , "line":50
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "Width":"1024 bits"
+                  , "Type":"Local-pipelined"
+                  , "Stall-free":"No"
+                  , "Stores to":"embedding_local"
+                  , "Start Cycle":"455"
+                  , "Latency":"31"
+                  , "Reference":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"See %L for more information"
+                      , "links":
+                      [
+                        {
+                          "guide":"Best Practices Guide : Load-Store Units"
+                          , "link":"https://www.altera.com/documentation/mwh1391807516407.html#yeo1491314105959"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"inst"
+              , "id":24
+              , "name":"Store"
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                    , "line":50
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "Width":"2048 bits"
+                  , "Type":"Local-pipelined"
+                  , "Stall-free":"No"
+                  , "Stores to":"embedding_local"
+                  , "Start Cycle":"455"
+                  , "Latency":"31"
+                  , "Reference":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"See %L for more information"
+                      , "links":
+                      [
+                        {
+                          "guide":"Best Practices Guide : Load-Store Units"
+                          , "link":"https://www.altera.com/documentation/mwh1391807516407.html#yeo1491314105959"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"inst"
+              , "id":25
+              , "name":"Store"
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                    , "line":50
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "Width":"4096 bits"
+                  , "Type":"Local-pipelined"
+                  , "Stall-free":"No"
+                  , "Stores to":"embedding_local"
+                  , "Start Cycle":"455"
+                  , "Latency":"31"
+                  , "Reference":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"See %L for more information"
+                      , "links":
+                      [
+                        {
+                          "guide":"Best Practices Guide : Load-Store Units"
+                          , "link":"https://www.altera.com/documentation/mwh1391807516407.html#yeo1491314105959"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"inst"
+              , "id":26
+              , "name":"Store"
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                    , "line":50
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "Width":"8192 bits"
+                  , "Type":"Local-pipelined"
+                  , "Stall-free":"No"
+                  , "Stores to":"embedding_local"
+                  , "Start Cycle":"455"
+                  , "Latency":"31"
+                  , "Reference":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"See %L for more information"
+                      , "links":
+                      [
+                        {
+                          "guide":"Best Practices Guide : Load-Store Units"
+                          , "link":"https://www.altera.com/documentation/mwh1391807516407.html#yeo1491314105959"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"inst"
+              , "id":27
+              , "name":"Store"
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                    , "line":50
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "Width":"16384 bits"
+                  , "Type":"Local-pipelined"
+                  , "Stall-free":"No"
+                  , "Stores to":"embedding_local"
+                  , "Start Cycle":"455"
+                  , "Latency":"31"
+                  , "Reference":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"See %L for more information"
+                      , "links":
+                      [
+                        {
+                          "guide":"Best Practices Guide : Load-Store Units"
+                          , "link":"https://www.altera.com/documentation/mwh1391807516407.html#yeo1491314105959"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"inst"
+              , "id":32
+              , "name":"loop"
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                    , "line":44
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "Start Cycle":"0"
+                  , "Latency":"1"
+                  , "Loops To":"33"
+                }
+              ]
+            }
+            , {
+              "type":"inst"
+              , "id":33
+              , "name":"loop end"
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "Start Cycle":"487"
+                  , "Latency":"1"
+                }
+              ]
+            }
+          ]
+          , "details":
+          [
+            {
+              "type":"table"
+              , "Latency":"487"
+              , "II":"131"
+              , "Subloops":"No"
+              , "Pipelined":"Yes"
+              , "Fmax Bottlenecks":"No"
+              , "Loop Info":"Loop is pipelined with II of 131. See Loops Analysis for more information."
+            }
+          ]
+        }
+        , {
+          "type":"bb"
+          , "id":8
+          , "name":"vector_add.B5"
+          , "children":
+          [
+            {
+              "type":"inst"
+              , "id":28
+              , "name":"Load"
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                    , "line":78
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "Width":"1024 bits"
+                  , "Type":"Local-pipelined never-stall"
+                  , "Stall-free":"Yes"
+                  , "Loads from":"output_local"
+                  , "Start Cycle":"1"
+                  , "Latency":"4"
+                  , "Reference":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"See %L for more information"
+                      , "links":
+                      [
+                        {
+                          "guide":"Best Practices Guide : Load-Store Units"
+                          , "link":"https://www.altera.com/documentation/mwh1391807516407.html#yeo1491314105959"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"inst"
+              , "id":29
+              , "name":"Store"
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                    , "line":78
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "Width":"1024 bits"
+                  , "Type":"Burst-coalesced"
+                  , "Stall-free":"No"
+                  , "Stores to":"output_DRAM"
+                  , "Start Cycle":"12"
+                  , "Latency":"1"
+                  , "Reference":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"See %L for more information"
+                      , "links":
+                      [
+                        {
+                          "guide":"Best Practices Guide : Load-Store Units"
+                          , "link":"https://www.altera.com/documentation/mwh1391807516407.html#yeo1491314105959"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"inst"
+              , "id":34
+              , "name":"begin"
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "Start Cycle":"0"
+                  , "Latency":"1"
+                }
+              ]
+            }
+            , {
+              "type":"inst"
+              , "id":35
+              , "name":"end"
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "Start Cycle":"0"
+                  , "Latency":"1"
+                }
+              ]
+            }
+          ]
+          , "details":
+          [
+            {
+              "type":"table"
+              , "Latency":"0"
+            }
+          ]
+        }
+        , {
+          "type":"bb"
+          , "id":9
+          , "name":"vector_add.B6"
+          , "details":
+          [
+            {
+              "type":"table"
+              , "Latency":"11"
+              , "II":"1"
+              , "Subloops":"Yes"
+              , "Pipelined":"Yes"
+              , "Fmax Bottlenecks":"No"
+              , "Loop Info":"Entry to loop. "
+              , "Loops To":"37"
+            }
+          ]
+        }
+        , {
+          "type":"bb"
+          , "id":10
+          , "name":"vector_add.B7"
+          , "children":
+          [
+            {
+              "type":"inst"
+              , "id":30
+              , "name":"Store"
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                    , "line":73
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "Width":"32 bits"
+                  , "Type":"Local-pipelined never-stall"
+                  , "Stall-free":"Yes"
+                  , "Stores to":"output_local"
+                  , "Start Cycle":"3"
+                  , "Latency":"1"
+                  , "Reference":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"See %L for more information"
+                      , "links":
+                      [
+                        {
+                          "guide":"Best Practices Guide : Load-Store Units"
+                          , "link":"https://www.altera.com/documentation/mwh1391807516407.html#yeo1491314105959"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"inst"
+              , "id":36
+              , "name":"begin"
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "Start Cycle":"0"
+                  , "Latency":"1"
+                }
+              ]
+            }
+            , {
+              "type":"inst"
+              , "id":37
+              , "name":"end"
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "Start Cycle":"10"
+                  , "Latency":"1"
+                }
+              ]
+            }
+          ]
+          , "details":
+          [
+            {
+              "type":"table"
+              , "Latency":"10"
+              , "II":"1"
+              , "Subloops":"Yes"
+              , "Pipelined":"Yes"
+              , "Fmax Bottlenecks":"No"
+              , "Loop Info":"Exit which branches back to loop. "
+            }
+          ]
+        }
+        , {
+          "type":"bb"
+          , "id":11
+          , "name":"vector_add.B8"
+          , "children":
+          [
+            {
+              "type":"inst"
+              , "id":31
+              , "name":"Load"
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                    , "line":71
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "Width":"128 bits"
+                  , "Type":"Local-pipelined never-stall"
+                  , "Stall-free":"Yes"
+                  , "Loads from":"embedding_local"
+                  , "Start Cycle":"9"
+                  , "Latency":"4"
+                  , "Reference":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"See %L for more information"
+                      , "links":
+                      [
+                        {
+                          "guide":"Best Practices Guide : Load-Store Units"
+                          , "link":"https://www.altera.com/documentation/mwh1391807516407.html#yeo1491314105959"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"inst"
+              , "id":38
+              , "name":"loop"
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                    , "line":70
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "Start Cycle":"0"
+                  , "Latency":"1"
+                  , "Loops To":"39"
+                }
+              ]
+            }
+            , {
+              "type":"inst"
+              , "id":39
+              , "name":"loop end"
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "Start Cycle":"22"
+                  , "Latency":"1"
+                }
+              ]
+            }
+          ]
+          , "details":
+          [
+            {
+              "type":"table"
+              , "Latency":"22"
+              , "II":"1"
+              , "Subloops":"No"
+              , "Pipelined":"Yes"
+              , "Fmax Bottlenecks":"No"
+              , "Loop Info":""
+            }
+          ]
+        }
+        , {
+          "type":"memtype"
+          , "id":40
+          , "name":"Local Memory"
+          , "children":
+          [
+            {
+              "type":"memsys"
+              , "id":41
+              , "name":"embedding_local"
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                    , "line":40
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "details":
+                  [
+                    {
+                      "type":"brief"
+                      , "text":"3584B requested\n4096B implemented"
+                    }
+                  ]
+                  , "Requested size":"3584 bytes"
+                  , "Implemented size":"4096 bytes"
+                  , "Number of banks":"2"
+                  , "Bank width":"16384 bits"
+                  , "Bank depth":"1 word"
+                  , "Total replication":"1"
+                  , "Reference":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"See %L for more information"
+                      , "links":
+                      [
+                        {
+                          "guide":"Best Practices Guide : Local Memory"
+                          , "link":"https://www.altera.com/documentation/mwh1391807516407.html#chn1469549457114"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"memsys"
+              , "id":52
+              , "name":"output_local"
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                    , "line":39
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"table"
+                  , "details":
+                  [
+                    {
+                      "type":"brief"
+                      , "text":"128B requested\n128B implemented"
+                    }
+                  ]
+                  , "Requested size":"128 bytes"
+                  , "Implemented size":"128 bytes"
+                  , "Number of banks":"1"
+                  , "Bank width":"1024 bits"
+                  , "Bank depth":"1 word"
+                  , "Total replication":"1"
+                  , "Reference":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"See %L for more information"
+                      , "links":
+                      [
+                        {
+                          "guide":"Best Practices Guide : Local Memory"
+                          , "link":"https://www.altera.com/documentation/mwh1391807516407.html#chn1469549457114"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+    , {
+      "type":"memtype"
+      , "id":1
+      , "name":"Global Memory"
+      , "children":
+      [
+        {
+          "type":"memsys"
+          , "id":56
+          , "name":"DDR"
+          , "details":
+          [
+            {
+              "type":"table"
+              , "Number of banks":"4"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  , "links":
+  [
+    {
+      "from":15
+      , "to":41
+    }
+    , {
+      "from":17
+      , "to":41
+    }
+    , {
+      "from":20
+      , "to":41
+    }
+    , {
+      "from":21
+      , "to":41
+    }
+    , {
+      "from":23
+      , "to":41
+    }
+    , {
+      "from":25
+      , "to":41
+    }
+    , {
+      "from":41
+      , "to":31
+    }
+    , {
+      "from":16
+      , "to":41
+    }
+    , {
+      "from":18
+      , "to":41
+    }
+    , {
+      "from":19
+      , "to":41
+    }
+    , {
+      "from":22
+      , "to":41
+    }
+    , {
+      "from":24
+      , "to":41
+    }
+    , {
+      "from":26
+      , "to":41
+    }
+    , {
+      "from":27
+      , "to":41
+    }
+    , {
+      "from":52
+      , "to":28
+    }
+    , {
+      "from":30
+      , "to":52
+    }
+    , {
+      "from":6
+      , "to":4
+    }
+    , {
+      "from":6
+      , "to":5
+    }
+    , {
+      "from":3
+      , "to":5
+    }
+    , {
+      "from":33
+      , "to":6
+    }
+    , {
+      "from":33
+      , "to":32
+    }
+    , {
+      "from":5
+      , "to":32
+    }
+    , {
+      "from":12
+      , "to":33
+    }
+    , {
+      "from":13
+      , "to":33
+    }
+    , {
+      "from":14
+      , "to":33
+    }
+    , {
+      "from":15
+      , "to":33
+    }
+    , {
+      "from":16
+      , "to":33
+    }
+    , {
+      "from":17
+      , "to":33
+    }
+    , {
+      "from":18
+      , "to":33
+    }
+    , {
+      "from":19
+      , "to":33
+    }
+    , {
+      "from":20
+      , "to":33
+    }
+    , {
+      "from":21
+      , "to":33
+    }
+    , {
+      "from":22
+      , "to":33
+    }
+    , {
+      "from":23
+      , "to":33
+    }
+    , {
+      "from":24
+      , "to":33
+    }
+    , {
+      "from":25
+      , "to":33
+    }
+    , {
+      "from":26
+      , "to":33
+    }
+    , {
+      "from":27
+      , "to":33
+    }
+    , {
+      "from":37
+      , "to":34
+    }
+    , {
+      "from":28
+      , "to":35
+    }
+    , {
+      "from":29
+      , "to":35
+    }
+    , {
+      "from":37
+      , "to":9
+    }
+    , {
+      "from":4
+      , "to":9
+    }
+    , {
+      "from":39
+      , "to":36
+    }
+    , {
+      "from":30
+      , "to":37
+    }
+    , {
+      "from":39
+      , "to":38
+    }
+    , {
+      "from":9
+      , "to":38
+    }
+    , {
+      "from":31
+      , "to":39
+    }
+    , {
+      "from":32
+      , "to":12
+    }
+    , {
+      "from":32
+      , "to":13
+    }
+    , {
+      "from":32
+      , "to":14
+    }
+    , {
+      "from":12
+      , "to":15
+    }
+    , {
+      "from":12
+      , "to":16
+    }
+    , {
+      "from":15
+      , "to":16
+    }
+    , {
+      "from":12
+      , "to":17
+    }
+    , {
+      "from":16
+      , "to":17
+    }
+    , {
+      "from":12
+      , "to":18
+    }
+    , {
+      "from":13
+      , "to":18
+    }
+    , {
+      "from":14
+      , "to":18
+    }
+    , {
+      "from":17
+      , "to":18
+    }
+    , {
+      "from":12
+      , "to":19
+    }
+    , {
+      "from":13
+      , "to":19
+    }
+    , {
+      "from":14
+      , "to":19
+    }
+    , {
+      "from":17
+      , "to":19
+    }
+    , {
+      "from":12
+      , "to":20
+    }
+    , {
+      "from":13
+      , "to":20
+    }
+    , {
+      "from":14
+      , "to":20
+    }
+    , {
+      "from":17
+      , "to":20
+    }
+    , {
+      "from":12
+      , "to":21
+    }
+    , {
+      "from":13
+      , "to":21
+    }
+    , {
+      "from":14
+      , "to":21
+    }
+    , {
+      "from":17
+      , "to":21
+    }
+    , {
+      "from":12
+      , "to":22
+    }
+    , {
+      "from":13
+      , "to":22
+    }
+    , {
+      "from":14
+      , "to":22
+    }
+    , {
+      "from":17
+      , "to":22
+    }
+    , {
+      "from":12
+      , "to":23
+    }
+    , {
+      "from":13
+      , "to":23
+    }
+    , {
+      "from":14
+      , "to":23
+    }
+    , {
+      "from":17
+      , "to":23
+    }
+    , {
+      "from":12
+      , "to":24
+    }
+    , {
+      "from":13
+      , "to":24
+    }
+    , {
+      "from":14
+      , "to":24
+    }
+    , {
+      "from":17
+      , "to":24
+    }
+    , {
+      "from":12
+      , "to":25
+    }
+    , {
+      "from":13
+      , "to":25
+    }
+    , {
+      "from":14
+      , "to":25
+    }
+    , {
+      "from":17
+      , "to":25
+    }
+    , {
+      "from":12
+      , "to":26
+    }
+    , {
+      "from":13
+      , "to":26
+    }
+    , {
+      "from":14
+      , "to":26
+    }
+    , {
+      "from":17
+      , "to":26
+    }
+    , {
+      "from":12
+      , "to":27
+    }
+    , {
+      "from":13
+      , "to":27
+    }
+    , {
+      "from":14
+      , "to":27
+    }
+    , {
+      "from":17
+      , "to":27
+    }
+    , {
+      "from":34
+      , "to":28
+    }
+    , {
+      "from":28
+      , "to":29
+    }
+    , {
+      "from":36
+      , "to":30
+    }
+    , {
+      "from":38
+      , "to":31
+    }
+    , {
+      "from":56
+      , "to":14
+    }
+    , {
+      "from":29
+      , "to":56
+    }
+    , {
+      "from":56
+      , "to":12
+    }
+    , {
+      "from":56
+      , "to":13
+    }
+  ]
+}

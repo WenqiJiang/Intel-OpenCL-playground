@@ -1,0 +1,1818 @@
+{
+  "columns":
+  ["", "Pipelined", "II", "Bottleneck", "Details"]
+  , "children":
+  [
+    {
+      "name":"Kernel: vector_add"
+      , "data":
+      ["", "", ""]
+      , "debug":
+      [
+        [
+          {
+            "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+            , "line":27
+          }
+        ]
+      ]
+      , "details":
+      [
+        {
+          "type":"brief"
+          , "text":"Single work-item execution"
+        }
+        , {
+          "type":"text"
+          , "text":"Single work-item execution"
+        }
+        , {
+          "type":"text"
+          , "text":"See %L for more information"
+          , "links":
+          [
+            {
+              "guide":"Best Practices Guide : Kernels"
+              , "link":"https://www.altera.com/documentation/mwh1391807516407.html#ipp1476408832230"
+            }
+          ]
+        }
+      ]
+      , "children":
+      [
+        {
+          "name":"vector_add.B2"
+          , "data":
+          ["Yes", ">=1", "n/a"]
+          , "debug":
+          [
+            [
+              {
+                "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                , "line":43
+              }
+            ]
+          ]
+          , "details":
+          [
+            {
+              "type":"text"
+              , "text":"Iteration executed serially across vector_add.B4. Only a single loop iteration will execute inside this region due to memory dependency:"
+              , "details":
+              [
+                {
+                  "type":"text"
+                  , "text":"From: Store Operation (%L)"
+                  , "links":
+                  [
+                    {
+                      "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                      , "line":"50"
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"To: Store Operation (%L)"
+                  , "links":
+                  [
+                    {
+                      "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                      , "line":"50"
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"text"
+              , "text":"Iteration executed serially across vector_add.B4. Only a single loop iteration will execute inside this region due to memory dependency:"
+              , "details":
+              [
+                {
+                  "type":"text"
+                  , "text":"From: Store Operation (%L)"
+                  , "links":
+                  [
+                    {
+                      "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                      , "line":"50"
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"To: Store Operation (%L)"
+                  , "links":
+                  [
+                    {
+                      "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                      , "line":"50"
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"text"
+              , "text":"Iteration executed serially across vector_add.B4. Only a single loop iteration will execute inside this region due to memory dependency:"
+              , "details":
+              [
+                {
+                  "type":"text"
+                  , "text":"From: Store Operation (%L)"
+                  , "links":
+                  [
+                    {
+                      "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                      , "line":"50"
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"To: Store Operation (%L)"
+                  , "links":
+                  [
+                    {
+                      "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                      , "line":"50"
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"brief"
+              , "text":"Serial exe: Memory dependency"
+            }
+            , {
+              "type":"text"
+              , "text":"See %L for more information"
+              , "links":
+              [
+                {
+                  "guide":"Best Practices Guide : Nested Loops"
+                  , "link":"https://www.altera.com/documentation/mwh1391807516407.html#rfr1469543500580"
+                }
+              ]
+            }
+          ]
+          , "children":
+          [
+            {
+              "name":"vector_add.B4"
+              , "data":
+              ["Yes", "~131", "II"]
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                    , "line":44
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L, %L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"58"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"54"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L, %L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"54"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"58"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L, %L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"58"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L, %L, %L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"54"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"58"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L, %L, %L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"54"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"58"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L, %L, %L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"54"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"58"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L, %L, %L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"54"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"58"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L, %L, %L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"54"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"58"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"54"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L, %L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"54"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"58"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L, %L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"58"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L, %L, %L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"54"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"58"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L, %L, %L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"54"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"58"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L, %L, %L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"54"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"58"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L, %L, %L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"54"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"58"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L, %L, %L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"54"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"58"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"54"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L, %L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"54"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"58"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L, %L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"58"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L, %L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"58"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L, %L, %L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"54"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"58"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L, %L, %L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"54"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"58"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L, %L, %L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"54"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"58"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L, %L, %L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"54"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"58"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Compiler failed to schedule this loop with smaller II due to memory dependency:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"From: Store Operation (%L, %L, %L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"54"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"58"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"To: Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"The critical path that prevented successful II = 130 scheduling:"
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"31.00 clock cycles Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"31.00 clock cycles Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"31.00 clock cycles Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"31.00 clock cycles Store Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"0.63 clock cycles 1-bit Or Operation (%L, %L, %L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"54"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"58"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"0.63 clock cycles 1-bit Extractvalue Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"Unknown location"
+                          , "line":"0"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"0.63 clock cycles llvm.fpga.sfc.entry Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"Unknown location"
+                          , "line":"0"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"0.63 clock cycles 1-bit Or Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"0.63 clock cycles 1-bit Or Operation (%L, %L, %L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"54"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"58"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"0.63 clock cycles 1-bit Extractvalue Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"Unknown location"
+                          , "line":"0"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"0.63 clock cycles 1-bit Extractvalue Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"Unknown location"
+                          , "line":"0"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"0.63 clock cycles 1-bit Or Operation (%L, %L, %L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"54"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"58"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"0.63 clock cycles 1-bit Or Operation (%L, %L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"50"
+                        }
+                        , {
+                          "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                          , "line":"58"
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"0.63 clock cycles Insertvalue Operation (%L)"
+                      , "links":
+                      [
+                        {
+                          "filename":"Unknown location"
+                          , "line":"0"
+                        }
+                      ]
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"Loop orchestration compiler optimization is disabled."
+                }
+                , {
+                  "type":"brief"
+                  , "text":"Memory dependency"
+                }
+                , {
+                  "type":"text"
+                  , "text":"See %L for more information"
+                  , "links":
+                  [
+                    {
+                      "guide":"Best Practices Guide : Loops in a Single Work-Item Kernel"
+                      , "link":"https://www.altera.com/documentation/mwh1391807516407.html#wfa1476380079940"
+                    }
+                  ]
+                }
+              ]
+              , "children":
+              [
+                {
+                  "name":"Fully unrolled loop"
+                  , "data":
+                  ["n/a", "n/a", "n/a"]
+                  , "debug":
+                  [
+                    [
+                      {
+                        "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                        , "line":49
+                      }
+                    ]
+                  ]
+                  , "details":
+                  [
+                    {
+                      "type":"brief"
+                      , "text":"Auto-unrolled"
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"Auto-unrolled"
+                    }
+                  ]
+                  , "children":
+                  [
+                  ]
+                }
+                , {
+                  "name":"Fully unrolled loop"
+                  , "data":
+                  ["n/a", "n/a", "n/a"]
+                  , "debug":
+                  [
+                    [
+                      {
+                        "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                        , "line":53
+                      }
+                    ]
+                  ]
+                  , "details":
+                  [
+                    {
+                      "type":"brief"
+                      , "text":"Auto-unrolled"
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"Auto-unrolled"
+                    }
+                  ]
+                  , "children":
+                  [
+                  ]
+                }
+                , {
+                  "name":"Fully unrolled loop"
+                  , "data":
+                  ["n/a", "n/a", "n/a"]
+                  , "debug":
+                  [
+                    [
+                      {
+                        "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                        , "line":57
+                      }
+                    ]
+                  ]
+                  , "details":
+                  [
+                    {
+                      "type":"brief"
+                      , "text":"Auto-unrolled"
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"Auto-unrolled"
+                    }
+                  ]
+                  , "children":
+                  [
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+        , {
+          "name":"vector_add.B6"
+          , "data":
+          ["Yes", ">=1", "n/a"]
+          , "debug":
+          [
+            [
+              {
+                "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                , "line":65
+              }
+            ]
+          ]
+          , "details":
+          [
+            {
+              "type":"text"
+              , "text":"Loop orchestration compiler optimization is enabled."
+            }
+            , {
+              "type":"brief"
+              , "text":" "
+            }
+            , {
+              "type":"text"
+              , "text":"II is an approximation due to variable inner loop trip count."
+            }
+          ]
+          , "children":
+          [
+            {
+              "name":"4X Partially unrolled vector_add.B8"
+              , "data":
+              ["Yes", "1", "n/a"]
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                    , "line":70
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"text"
+                  , "text":"Loop orchestration compiler optimization is enabled."
+                }
+              ]
+              , "children":
+              [
+              ]
+            }
+          ]
+        }
+        , {
+          "name":"Fully unrolled loop"
+          , "data":
+          ["n/a", "n/a", "n/a"]
+          , "debug":
+          [
+            [
+              {
+                "filename":"/export/nycu/lustre/wenqi/Intel-OpenCL-playground/sample_embedding_lookup/device/embedding_lookup.cl"
+                , "line":77
+              }
+            ]
+          ]
+          , "details":
+          [
+            {
+              "type":"brief"
+              , "text":"Auto-unrolled"
+            }
+            , {
+              "type":"text"
+              , "text":"Auto-unrolled"
+            }
+          ]
+          , "children":
+          [
+          ]
+        }
+      ]
+    }
+  ]
+}

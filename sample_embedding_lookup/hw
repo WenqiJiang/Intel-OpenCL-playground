@@ -20,12 +20,23 @@ Checking if memory usage is larger than 100%
 +----------------------------------------+---------------------------+
 ; Resource                               + Usage                     ;
 +----------------------------------------+---------------------------+
-; Logic utilization                      ;   23%                     ;
-; ALUTs                                  ;   15%                     ;
-; Dedicated logic registers              ;   10%                     ;
-; Memory blocks                          ;    7%                     ;
+; Logic utilization                      ;   32%                     ;
+; ALUTs                                  ;   21%                     ;
+; Dedicated logic registers              ;   13%                     ;
+; Memory blocks                          ;   22%                     ;
 ; DSP blocks                             ;    0%                     ;
 +----------------------------------------+---------------------------;
 aoc: First stage compilation completed successfully.
 Compiling for FPGA. This process may take a long time, please be patient.
-aoc: Hardware generation completed successfully.
+Error (170143): Final fitting attempt was unsuccessful
+Error: An error occurred during routing
+Error: Quartus Prime Fitter was unsuccessful. 2 errors, 452 warnings
+Error (293001): Quartus Prime Full Compilation was unsuccessful. 3 errors, 4624 warnings
+Error (23035): Tcl error: ERROR: Error(s) found while running an executable. See report file(s) for error message(s). Message log indicates which executable was run last.
+Error (23031): Evaluation of Tcl script s10_partial_reconfig/flow.tcl unsuccessful
+Error: Quartus Prime Shell was unsuccessful. 9 errors, 4624 warnings
+Error (16546): Cannot load final database - ensure all earlier stages of the compiler have completed.
+Error (17941): The design could not be loaded due to errors.
+Error (23035): Tcl error: 
+Error (23031): Evaluation of Tcl script scripts/adjust_plls_mcp.tcl unsuccessful
+Error: Quartus Prime Shell was unsuccessful. 4 errors, 0 warnings
