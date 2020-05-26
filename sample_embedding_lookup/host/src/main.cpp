@@ -44,38 +44,43 @@
 
 using namespace aocl_utils;
 
+#define KERNEL_NUM 1
 // OpenCL runtime configuration
 cl_platform_id platform = NULL;
 unsigned num_devices = 0;
 scoped_array<cl_device_id> device; // num_devices elements
 cl_context context = NULL;
-scoped_array<cl_command_queue> queue; // num_devices elements
+// scoped_array<cl_command_queue> queue; // num_devices elements
 cl_program program = NULL;
-scoped_array<cl_kernel> kernel; // num_devices elements
-#if USE_SVM_API == 0
-scoped_array<cl_mem> input_a_buf; // num_devices elements
-scoped_array<cl_mem> input_b_buf; // num_devices elements
-scoped_array<cl_mem> output_buf; // num_devices elements
-#endif /* USE_SVM_API == 0 */
+// scoped_array<cl_kernel> kernel; // num_devices elements
+// #if USE_SVM_API == 0
+// scoped_array<cl_mem> input_a_buf; // num_devices elements
+// scoped_array<cl_mem> input_b_buf; // num_devices elements
+// scoped_array<cl_mem> output_buf; // num_devices elements
+// #endif /* USE_SVM_API == 0 */
+cl_kernel kernel;
+cl_command_queue queue;
+cl_mem input_a_buf, input_b_buf, output_buf;
 
 // Problem data.
 unsigned N = BANK_SIZE; // problem size
-#if USE_SVM_API == 0
-scoped_array<scoped_aligned_ptr<D_TYPE> > input_a, input_b; // num_devices elements
-scoped_array<scoped_aligned_ptr<D_TYPE> > output; // num_devices elements
-#else
-scoped_array<scoped_SVM_aligned_ptr<D_TYPE> > input_a, input_b; // num_devices elements
-scoped_array<scoped_SVM_aligned_ptr<D_TYPE> > output; // num_devices elements
-#endif /* USE_SVM_API == 0 */
-scoped_array<scoped_array<D_TYPE> > ref_output; // num_devices elements
-scoped_array<unsigned> n_per_device; // num_devices elements
+
+// CPU side 
+// scoped_array<scoped_aligned_ptr<D_TYPE> > input_a, input_b; // num_devices elements
+// scoped_array<scoped_aligned_ptr<D_TYPE> > output; // num_devices elements
+// scoped_array<scoped_array<D_TYPE> > ref_output; // num_devices elements
+
+scoped_aligned_ptr<D_TYPE> input_a, input_b; // num_devices elements
+scoped_aligned_ptr<D_TYPE> output; // num_devices elements
+scoped_array<D_TYPE> ref_output; // num_devices elements
+// scoped_array<unsigned> n_per_device; // num_devices elements
 
 // Function prototypes
 D_TYPE rand_int();
-bool init_opencl();
-void init_problem();
-void run();
-void cleanup();
+// bool init_opencl();
+// void init_problem();
+// void run();
+// void cleanup();
 
 // Entry point.
 int main(int argc, char **argv) {
@@ -86,33 +91,7 @@ int main(int argc, char **argv) {
     N = options.get<unsigned>("n");
   }
 
-  // Initialize OpenCL.
-  if(!init_opencl()) {
-    return -1;
-  }
-
-  // Initialize the problem data.
-  // Requires the number of devices to be known.
-  init_problem();
-
-  // Run the kernel.
-  run();
-
-  // Free the resources allocated
-  cleanup();
-
-  return 0;
-}
-
-/////// HELPER FUNCTIONS ///////
-
-// Randomly generate a floating-point number between -10 and 10.
-D_TYPE rand_int() {
-  return rand() % 15 - 7;
-}
-
-// Initializes the OpenCL objects.
-bool init_opencl() {
+  /////////////////////////     Init OpenCL     /////////////////////////
   cl_int status;
 
   printf("Initializing OpenCL\n");
@@ -146,7 +125,7 @@ bool init_opencl() {
 
   // Create the program for all device. Use the first device as the
   // representative device (assuming all device are of the same type).
-  std::string binary_file = getBoardBinaryFile("embedding", device[0]);
+  std::string binary_file = getBoardBinaryFile("embedding_lookup", device[0]);
   printf("Using AOCX: %s\n", binary_file.c_str());
   program = createProgramFromBinary(context, binary_file.c_str(), device, num_devices);
 
@@ -155,82 +134,44 @@ bool init_opencl() {
   checkError(status, "Failed to build program");
 
   // Create per-device objects.
-  queue.reset(num_devices);
-  kernel.reset(num_devices);
-  n_per_device.reset(num_devices);
-#if USE_SVM_API == 0
-  input_a_buf.reset(num_devices);
-  input_b_buf.reset(num_devices);
-  output_buf.reset(num_devices);
-#endif /* USE_SVM_API == 0 */
+  // queue.reset(KERNEL_NUM);
+  // num_device = 1 -> array size = 1
+  // kernel.reset(num_devices);
+  // n_per_device.reset(num_devices);
+  // input_a_buf.reset(num_devices);
+  // input_b_buf.reset(num_devices);
+  // output_buf.reset(num_devices);
 
-  for(unsigned i = 0; i < num_devices; ++i) {
-    // Command queue.
-    queue[i] = clCreateCommandQueue(context, device[i], CL_QUEUE_PROFILING_ENABLE, &status);
-    checkError(status, "Failed to create command queue");
+  // Command queue.
+  queue = clCreateCommandQueue(context, device[0], CL_QUEUE_PROFILING_ENABLE, &status);
+  checkError(status, "Failed to create command queue");
 
-    // Kernel.
-    const char *kernel_name = "vector_add";
-    kernel[i] = clCreateKernel(program, kernel_name, &status);
-    checkError(status, "Failed to create kernel");
+  // Kernel.
+  // here, kernel name is the top-level function name
+  const char *kernel_name = "embedding_lookup";
+  kernel = clCreateKernel(program, kernel_name, &status);
+  checkError(status, "Failed to create kernel");
 
-    // Determine the number of elements processed by this device.
-    n_per_device[i] = N / num_devices; // number of elements handled by this device
+  // Input buffers.
+  input_a_buf = clCreateBuffer(context, CL_MEM_READ_ONLY, N * sizeof(D_TYPE), NULL, &status);
+  checkError(status, "Failed to create buffer for input A");
 
-    // Spread out the remainder of the elements over the first
-    // N % num_devices.
-    if(i < (N % num_devices)) {
-      n_per_device[i]++;
-    }
+  input_b_buf = clCreateBuffer(context, CL_MEM_READ_ONLY, N * sizeof(D_TYPE), NULL, &status);
+  checkError(status, "Failed to create buffer for input B");
 
-#if USE_SVM_API == 0
-    // Input buffers.
-    input_a_buf[i] = clCreateBuffer(context, CL_MEM_READ_ONLY, 
-        n_per_device[i] * sizeof(D_TYPE), NULL, &status);
-    checkError(status, "Failed to create buffer for input A");
+  // Output buffer.
+  output_buf = clCreateBuffer(context, CL_MEM_WRITE_ONLY, N * sizeof(D_TYPE), NULL, &status);
+  checkError(status, "Failed to create buffer for output");
 
-    input_b_buf[i] = clCreateBuffer(context, CL_MEM_READ_ONLY, 
-        n_per_device[i] * sizeof(D_TYPE), NULL, &status);
-    checkError(status, "Failed to create buffer for input B");
-
-    // Output buffer.
-    output_buf[i] = clCreateBuffer(context, CL_MEM_WRITE_ONLY, 
-        n_per_device[i] * sizeof(D_TYPE), NULL, &status);
-    checkError(status, "Failed to create buffer for output");
-#else
-    cl_device_svm_capabilities caps = 0;
-
-    status = clGetDeviceInfo(
-      device[i],
-      CL_DEVICE_SVM_CAPABILITIES,
-      sizeof(cl_device_svm_capabilities),
-      &caps,
-      0
-    );
-    checkError(status, "Failed to get device info");
-
-    if (!(caps & CL_DEVICE_SVM_COARSE_GRAIN_BUFFER)) {
-      printf("The host was compiled with USE_SVM_API, however the device currently being targeted does not support SVM.\n");
-      // Free the resources allocated
-      cleanup();
-      return false;
-    }
-#endif /* USE_SVM_API == 0 */
-  }
-
-  return true;
-}
-
-// Initialize the data for the problem. Requires num_devices to be known.
-void init_problem() {
+  /////////////////////////     Init Problem     /////////////////////////
   if(num_devices == 0) {
     checkError(-1, "No devices");
   }
 
-  input_a.reset(num_devices);
-  input_b.reset(num_devices);
-  output.reset(num_devices);
-  ref_output.reset(num_devices);
+  // input_a.reset(num_devices);
+  // input_b.reset(num_devices);
+  // output.reset(num_devices);
+  // ref_output.reset(num_devices);
 
   const int access_idx[] = {3, 99, 38, 72, 29, 57, 1, 72, 36, 76, 35, 50, 37, 57, 
       13, 66, 26, 70, 41, 93, 48, 82, 44, 78, 25, 52, 3, 92, 36, 56, 46, 88};
@@ -239,152 +180,95 @@ void init_problem() {
   // of a total of N elements.
   // We create separate arrays for each device so that each device has an
   // aligned buffer.
-  for(unsigned i = 0; i < num_devices; ++i) {
-#if USE_SVM_API == 0
-    input_a[i].reset(n_per_device[i]);
-    input_b[i].reset(n_per_device[i]);
-    output[i].reset(n_per_device[i]);
-    ref_output[i].reset(BATCH_SIZE);
+  input_a.reset(N);
+  input_b.reset(N);
+  output.reset(N);
+  ref_output.reset(BATCH_SIZE);
 
-    for(unsigned j = 0; j < n_per_device[i]; ++j) {
-      input_a[i][j] = rand_int();
-      input_b[i][j] = rand_int();
-    }
-
-    // software results
-    for (int item = 0; item < BATCH_SIZE; item++) {
-      int idx = access_idx[item];
-      // 3 tables
-      int result = 0;
-      for (int count = 0; count < DATA_SIZE_0; count++) {
-        result += input_a[i][ADDR_START_TABLE_0 + idx * DATA_SIZE_0 + count];
-      }
-      for (int count = 0; count < DATA_SIZE_1; count++) {
-        result += input_a[i][ADDR_START_TABLE_1 + idx * DATA_SIZE_1 + count];
-      }
-      for (int count = 0; count < DATA_SIZE_2; count++) {
-        result += input_a[i][ADDR_START_TABLE_2 + idx * DATA_SIZE_2 + count];
-      }
-      ref_output[i][item] = result;
-    }
-
-#else
-    input_a[i].reset(context, n_per_device[i]);
-    input_b[i].reset(context, n_per_device[i]);
-    output[i].reset(context, n_per_device[i]);
-    ref_output[i].reset(n_per_device[i]);
-
-    cl_int status;
-
-    status = clEnqueueSVMMap(queue[i], CL_TRUE, CL_MAP_WRITE,
-        (void *)input_a[i], n_per_device[i] * sizeof(D_TYPE), 0, NULL, NULL);
-    checkError(status, "Failed to map input A");
-    status = clEnqueueSVMMap(queue[i], CL_TRUE, CL_MAP_WRITE,
-        (void *)input_b[i], n_per_device[i] * sizeof(D_TYPE), 0, NULL, NULL);
-    checkError(status, "Failed to map input B");
-
-    for(unsigned j = 0; j < n_per_device[i]; ++j) {
-      input_a[i][j] = rand_int();
-      input_b[i][j] = rand_int();
-      ref_output[i][j] = input_a[i][j] + input_b[i][j];
-    }
-
-    status = clEnqueueSVMUnmap(queue[i], (void *)input_a[i], 0, NULL, NULL);
-    checkError(status, "Failed to unmap input A");
-    status = clEnqueueSVMUnmap(queue[i], (void *)input_b[i], 0, NULL, NULL);
-    checkError(status, "Failed to unmap input B");
-#endif /* USE_SVM_API == 0 */
+  for(unsigned j = 0; j < N; ++j) {
+    input_a[j] = rand_int();
+    input_b[j] = rand_int();
   }
-}
 
-void run() {
-  cl_int status;
+  // software results
+  for (int item = 0; item < BATCH_SIZE; item++) {
+    int idx = access_idx[item];
+    // 3 tables
+    int result = 0;
+    for (int count = 0; count < DATA_SIZE_0; count++) {
+      result += input_a[ADDR_START_TABLE_0 + idx * DATA_SIZE_0 + count];
+    }
+    for (int count = 0; count < DATA_SIZE_1; count++) {
+      result += input_a[ADDR_START_TABLE_1 + idx * DATA_SIZE_1 + count];
+    }
+    for (int count = 0; count < DATA_SIZE_2; count++) {
+      result += input_a[ADDR_START_TABLE_2 + idx * DATA_SIZE_2 + count];
+    }
+    ref_output[item] = result;
+  }
+  
+
+  /////////////////////////     Run Kernel     /////////////////////////
 
   const double start_time = getCurrentTimestamp();
 
   // Launch the problem for each device.
-  scoped_array<cl_event> kernel_event(num_devices);
-  scoped_array<cl_event> finish_event(num_devices);
+  cl_event kernel_event;
+  cl_event finish_event;
 
-  for(unsigned i = 0; i < num_devices; ++i) {
+  // Transfer inputs to each device. Each of the host buffers supplied to
+  // clEnqueueWriteBuffer here is already aligned to ensure that DMA is used
+  // for the host-to-device transfer.
+  // 2 buffers a and b
+  cl_event write_event[2];
+  status = clEnqueueWriteBuffer(queue, input_a_buf, CL_FALSE,
+      0, N * sizeof(D_TYPE), input_a, 0, NULL, &write_event[0]);
+  checkError(status, "Failed to transfer input A");
 
-#if USE_SVM_API == 0
-    // Transfer inputs to each device. Each of the host buffers supplied to
-    // clEnqueueWriteBuffer here is already aligned to ensure that DMA is used
-    // for the host-to-device transfer.
-    cl_event write_event[2];
-    status = clEnqueueWriteBuffer(queue[i], input_a_buf[i], CL_FALSE,
-        0, n_per_device[i] * sizeof(D_TYPE), input_a[i], 0, NULL, &write_event[0]);
-    checkError(status, "Failed to transfer input A");
+  status = clEnqueueWriteBuffer(queue, input_b_buf, CL_FALSE,
+      0, N * sizeof(D_TYPE), input_b, 0, NULL, &write_event[1]);
+  checkError(status, "Failed to transfer input B");
 
-    status = clEnqueueWriteBuffer(queue[i], input_b_buf[i], CL_FALSE,
-        0, n_per_device[i] * sizeof(D_TYPE), input_b[i], 0, NULL, &write_event[1]);
-    checkError(status, "Failed to transfer input B");
-#endif /* USE_SVM_API == 0 */
+  // Set kernel arguments.
+  unsigned argi = 0;
 
-    // Set kernel arguments.
-    unsigned argi = 0;
+  status = clSetKernelArg(kernel, argi++, sizeof(cl_mem), &input_a_buf);
+  checkError(status, "Failed to set argument %d", argi - 1);
 
-#if USE_SVM_API == 0
-    status = clSetKernelArg(kernel[i], argi++, sizeof(cl_mem), &input_a_buf[i]);
-    checkError(status, "Failed to set argument %d", argi - 1);
+  // status = clSetKernelArg(kernel[i], argi++, sizeof(cl_mem), &input_b_buf[i]);
+  // checkError(status, "Failed to set argument %d", argi - 1);
 
-    // status = clSetKernelArg(kernel[i], argi++, sizeof(cl_mem), &input_b_buf[i]);
-    // checkError(status, "Failed to set argument %d", argi - 1);
+  status = clSetKernelArg(kernel, argi++, sizeof(cl_mem), &output_buf);
+  checkError(status, "Failed to set argument %d", argi - 1);
 
-    status = clSetKernelArg(kernel[i], argi++, sizeof(cl_mem), &output_buf[i]);
-    checkError(status, "Failed to set argument %d", argi - 1);
-#else
-    status = clSetKernelArgSVMPointer(kernel[i], argi++, (void*)input_a[i]);
-    checkError(status, "Failed to set argument %d", argi - 1);
+  // Enqueue kernel.
+  // Use a global work size corresponding to the number of elements to add
+  // for this device.
+  //
+  // We don't specify a local work size and let the runtime choose
+  // (it'll choose to use one work-group with the same size as the global
+  // work-size).
+  //
+  // Events are used to ensure that the kernel is not launched until
+  // the writes to the input buffers have completed.
+  const size_t global_work_size = N;
+  printf("Launching for device %d (%zd elements)\n", global_work_size);
 
-    status = clSetKernelArgSVMPointer(kernel[i], argi++, (void*)input_b[i]);
-    checkError(status, "Failed to set argument %d", argi - 1);
+  status = clEnqueueNDRangeKernel(queue, kernel, 1, NULL,
+      &global_work_size, NULL, 2, write_event, &kernel_event);
+  checkError(status, "Failed to launch kernel");
 
-    status = clSetKernelArgSVMPointer(kernel[i], argi++, (void*)output[i]);
-    checkError(status, "Failed to set argument %d", argi - 1);
-#endif /* USE_SVM_API == 0 */
+  // Read the result. This the final operation.
+  status = clEnqueueReadBuffer(queue, output_buf, CL_FALSE,
+      0, N * sizeof(D_TYPE), output, 1, &kernel_event, &finish_event);
 
-    // Enqueue kernel.
-    // Use a global work size corresponding to the number of elements to add
-    // for this device.
-    //
-    // We don't specify a local work size and let the runtime choose
-    // (it'll choose to use one work-group with the same size as the global
-    // work-size).
-    //
-    // Events are used to ensure that the kernel is not launched until
-    // the writes to the input buffers have completed.
-    const size_t global_work_size = n_per_device[i];
-    printf("Launching for device %d (%zd elements)\n", i, global_work_size);
-
-#if USE_SVM_API == 0
-    status = clEnqueueNDRangeKernel(queue[i], kernel[i], 1, NULL,
-        &global_work_size, NULL, 2, write_event, &kernel_event[i]);
-#else
-    status = clEnqueueNDRangeKernel(queue[i], kernel[i], 1, NULL,
-        &global_work_size, NULL, 0, NULL, &kernel_event[i]);
-#endif /* USE_SVM_API == 0 */
-    checkError(status, "Failed to launch kernel");
-
-#if USE_SVM_API == 0
-    // Read the result. This the final operation.
-    status = clEnqueueReadBuffer(queue[i], output_buf[i], CL_FALSE,
-        0, n_per_device[i] * sizeof(D_TYPE), output[i], 1, &kernel_event[i], &finish_event[i]);
-
-    // Release local events.
-    clReleaseEvent(write_event[0]);
-    clReleaseEvent(write_event[1]);
-#else
-    status = clEnqueueSVMMap(queue[i], CL_TRUE, CL_MAP_READ,
-        (void *)output[i], n_per_device[i] * sizeof(D_TYPE), 0, NULL, NULL);
-    checkError(status, "Failed to map output");
-	clFinish(queue[i]);
-#endif /* USE_SVM_API == 0 */
-  }
+  // Release local events.
+  clReleaseEvent(write_event[0]);
+  clReleaseEvent(write_event[1]);
+  
 
   // Wait for all devices to finish.
-  clWaitForEvents(num_devices, finish_event);
+  clWaitForEvents(num_devices, &finish_event);
 
   const double end_time = getCurrentTimestamp();
 
@@ -392,65 +276,312 @@ void run() {
   printf("\nTime: %0.3f ms\n", (end_time - start_time) * 1e3);
 
   // Get kernel times using the OpenCL event profiling API.
-  for(unsigned i = 0; i < num_devices; ++i) {
-    cl_ulong time_ns = getStartEndTime(kernel_event[i]);
-    printf("Kernel time (device %d): %0.3f ms\n", i, double(time_ns) * 1e-6);
-  }
+  cl_ulong time_ns = getStartEndTime(kernel_event);
+  printf("Kernel time (device %d): %0.3f ms\n", double(time_ns) * 1e-6);
 
   // Release all events.
-  for(unsigned i = 0; i < num_devices; ++i) {
-    clReleaseEvent(kernel_event[i]);
-    clReleaseEvent(finish_event[i]);
-  }
+  clReleaseEvent(kernel_event);
+  clReleaseEvent(finish_event);
 
   // Verify results.
   bool pass = true;
-  for(unsigned i = 0; i < num_devices && pass; ++i) {
     for(unsigned j = 0; j < BATCH_SIZE && pass; ++j) {
-      if(output[i][j] != ref_output[i][j]) {
+      if(output[j] != ref_output[j]) {
         printf("Failed verification @ device %d, index %d\nOutput: %f\nReference: %f\n",
-            i, j, output[i][j], ref_output[i][j]);
+            j, output[j], ref_output[j]);
         pass = false;
       }
-    }
   }
 
-#if USE_SVM_API == 1
-  for (unsigned i = 0; i < num_devices; ++i) {
-    status = clEnqueueSVMUnmap(queue[i], (void *)output[i], 0, NULL, NULL);
-    checkError(status, "Failed to unmap output");
-  }
-#endif /* USE_SVM_API == 1 */
   printf("\nVerification: %s\n", pass ? "PASS" : "FAIL");
+
+  /////////////////////////     Clenup     /////////////////////////
+
+  if(kernel) {
+    clReleaseKernel(kernel);
+  }
+  if(queue) {
+    clReleaseCommandQueue(queue);
+  }
+  if(input_a_buf) {
+    clReleaseMemObject(input_a_buf);
+  }
+  if(input_b_buf) {
+    clReleaseMemObject(input_b_buf);
+  }
+  if(output_buf) {
+    clReleaseMemObject(output_buf);
+  }
+
+  if(program) {
+    clReleaseProgram(program);
+  }
+  if(context) {
+    clReleaseContext(context);
+  }
+
+  return 0;
 }
+
+/////// HELPER FUNCTIONS ///////
+
+// Randomly generate a floating-point number between -10 and 10.
+D_TYPE rand_int() {
+  return rand() % 15 - 7;
+}
+
+// // Initializes the OpenCL objects.
+// bool init_opencl() {
+//   cl_int status;
+
+//   printf("Initializing OpenCL\n");
+
+//   if(!setCwdToExeDir()) {
+//     return false;
+//   }
+
+//   // Get the OpenCL platform.
+//   platform = findPlatform("Intel(R) FPGA SDK for OpenCL(TM)");
+//   if(platform == NULL) {
+//     printf("ERROR: Unable to find Intel(R) FPGA OpenCL platform.\n");
+//     return false;
+//   }
+
+//   // Query the available OpenCL device.
+//   device.reset(getDevices(platform, CL_DEVICE_TYPE_ALL, &num_devices));
+//   printf("Platform: %s\n", getPlatformName(platform).c_str());
+//   printf("Using %d device(s)\n", num_devices);
+//   for(unsigned i = 0; i < num_devices; ++i) {
+//     printf("  %s\n", getDeviceName(device[i]).c_str());
+//   }
+//   // WENQI: only 1 device is supported
+//   if (num_devices != 1) {
+//     return -1;
+//   }
+
+//   // Create the context.
+//   context = clCreateContext(NULL, num_devices, device, &oclContextCallback, NULL, &status);
+//   checkError(status, "Failed to create context");
+
+//   // Create the program for all device. Use the first device as the
+//   // representative device (assuming all device are of the same type).
+//   std::string binary_file = getBoardBinaryFile("embedding_lookup", device[0]);
+//   printf("Using AOCX: %s\n", binary_file.c_str());
+//   program = createProgramFromBinary(context, binary_file.c_str(), device, num_devices);
+
+//   // Build the program that was just created.
+//   status = clBuildProgram(program, 0, NULL, "", NULL, NULL);
+//   checkError(status, "Failed to build program");
+
+//   // Create per-device objects.
+//   queue.reset(num_devices);
+//   kernel.reset(num_devices);
+//   n_per_device.reset(num_devices);
+// #if USE_SVM_API == 0
+//   input_a_buf.reset(num_devices);
+//   input_b_buf.reset(num_devices);
+//   output_buf.reset(num_devices);
+// #endif /* USE_SVM_API == 0 */
+
+//   for(unsigned i = 0; i < num_devices; ++i) {
+//     // Command queue.
+//     queue[i] = clCreateCommandQueue(context, device[i], CL_QUEUE_PROFILING_ENABLE, &status);
+//     checkError(status, "Failed to create command queue");
+
+//     // Kernel.
+//     const char *kernel_name = "vector_add";
+//     kernel[i] = clCreateKernel(program, kernel_name, &status);
+//     checkError(status, "Failed to create kernel");
+
+//     // Determine the number of elements processed by this device.
+//     N = N / num_devices; // number of elements handled by this device
+
+//     // Spread out the remainder of the elements over the first
+//     // N % num_devices.
+//     if(i < (N % num_devices)) {
+//       N++;
+//     }
+
+//     // Input buffers.
+//     input_a_buf[i] = clCreateBuffer(context, CL_MEM_READ_ONLY, 
+//         N * sizeof(D_TYPE), NULL, &status);
+//     checkError(status, "Failed to create buffer for input A");
+
+//     input_b_buf[i] = clCreateBuffer(context, CL_MEM_READ_ONLY, 
+//         N * sizeof(D_TYPE), NULL, &status);
+//     checkError(status, "Failed to create buffer for input B");
+
+//     // Output buffer.
+//     output_buf[i] = clCreateBuffer(context, CL_MEM_WRITE_ONLY, 
+//         N * sizeof(D_TYPE), NULL, &status);
+//     checkError(status, "Failed to create buffer for output");
+//   }
+
+//   return true;
+// }
+
+// // Initialize the data for the problem. Requires num_devices to be known.
+// void init_problem() {
+//   if(num_devices == 0) {
+//     checkError(-1, "No devices");
+//   }
+
+//   input_a.reset(num_devices);
+//   input_b.reset(num_devices);
+//   output.reset(num_devices);
+//   ref_output.reset(num_devices);
+
+//   const int access_idx[] = {3, 99, 38, 72, 29, 57, 1, 72, 36, 76, 35, 50, 37, 57, 
+//       13, 66, 26, 70, 41, 93, 48, 82, 44, 78, 25, 52, 3, 92, 36, 56, 46, 88};
+
+//   // Generate input vectors A and B and the reference output consisting
+//   // of a total of N elements.
+//   // We create separate arrays for each device so that each device has an
+//   // aligned buffer.
+//   for(unsigned i = 0; i < num_devices; ++i) {
+//     input_a[i].reset(N);
+//     input_b[i].reset(N);
+//     output[i].reset(N);
+//     ref_output[i].reset(BATCH_SIZE);
+
+//     for(unsigned j = 0; j < N; ++j) {
+//       input_a[i][j] = rand_int();
+//       input_b[i][j] = rand_int();
+//     }
+
+//     // software results
+//     for (int item = 0; item < BATCH_SIZE; item++) {
+//       int idx = access_idx[item];
+//       // 3 tables
+//       int result = 0;
+//       for (int count = 0; count < DATA_SIZE_0; count++) {
+//         result += input_a[i][ADDR_START_TABLE_0 + idx * DATA_SIZE_0 + count];
+//       }
+//       for (int count = 0; count < DATA_SIZE_1; count++) {
+//         result += input_a[i][ADDR_START_TABLE_1 + idx * DATA_SIZE_1 + count];
+//       }
+//       for (int count = 0; count < DATA_SIZE_2; count++) {
+//         result += input_a[i][ADDR_START_TABLE_2 + idx * DATA_SIZE_2 + count];
+//       }
+//       ref_output[i][item] = result;
+//     }
+//   }
+// }
+
+// void run() {
+//   cl_int status;
+
+//   const double start_time = getCurrentTimestamp();
+
+//   // Launch the problem for each device.
+//   scoped_array<cl_event> kernel_event(num_devices);
+//   scoped_array<cl_event> finish_event(num_devices);
+
+//   for(unsigned i = 0; i < num_devices; ++i) {
+
+//     // Transfer inputs to each device. Each of the host buffers supplied to
+//     // clEnqueueWriteBuffer here is already aligned to ensure that DMA is used
+//     // for the host-to-device transfer.
+//     cl_event write_event[2];
+//     status = clEnqueueWriteBuffer(queue[i], input_a_buf[i], CL_FALSE,
+//         0, N * sizeof(D_TYPE), input_a[i], 0, NULL, &write_event[0]);
+//     checkError(status, "Failed to transfer input A");
+
+//     status = clEnqueueWriteBuffer(queue[i], input_b_buf[i], CL_FALSE,
+//         0, N * sizeof(D_TYPE), input_b[i], 0, NULL, &write_event[1]);
+//     checkError(status, "Failed to transfer input B");
+
+//     // Set kernel arguments.
+//     unsigned argi = 0;
+
+//     status = clSetKernelArg(kernel[i], argi++, sizeof(cl_mem), &input_a_buf[i]);
+//     checkError(status, "Failed to set argument %d", argi - 1);
+
+//     // status = clSetKernelArg(kernel[i], argi++, sizeof(cl_mem), &input_b_buf[i]);
+//     // checkError(status, "Failed to set argument %d", argi - 1);
+
+//     status = clSetKernelArg(kernel[i], argi++, sizeof(cl_mem), &output_buf[i]);
+//     checkError(status, "Failed to set argument %d", argi - 1);
+
+//     // Enqueue kernel.
+//     // Use a global work size corresponding to the number of elements to add
+//     // for this device.
+//     //
+//     // We don't specify a local work size and let the runtime choose
+//     // (it'll choose to use one work-group with the same size as the global
+//     // work-size).
+//     //
+//     // Events are used to ensure that the kernel is not launched until
+//     // the writes to the input buffers have completed.
+//     const size_t global_work_size = N;
+//     printf("Launching for device %d (%zd elements)\n", i, global_work_size);
+
+//     status = clEnqueueNDRangeKernel(queue[i], kernel[i], 1, NULL,
+//         &global_work_size, NULL, 2, write_event, &kernel_event[i]);
+//     checkError(status, "Failed to launch kernel");
+
+//     // Read the result. This the final operation.
+//     status = clEnqueueReadBuffer(queue[i], output_buf[i], CL_FALSE,
+//         0, N * sizeof(D_TYPE), output[i], 1, &kernel_event[i], &finish_event[i]);
+
+//     // Release local events.
+//     clReleaseEvent(write_event[0]);
+//     clReleaseEvent(write_event[1]);
+//   }
+
+//   // Wait for all devices to finish.
+//   clWaitForEvents(num_devices, finish_event);
+
+//   const double end_time = getCurrentTimestamp();
+
+//   // Wall-clock time taken.
+//   printf("\nTime: %0.3f ms\n", (end_time - start_time) * 1e3);
+
+//   // Get kernel times using the OpenCL event profiling API.
+//   for(unsigned i = 0; i < num_devices; ++i) {
+//     cl_ulong time_ns = getStartEndTime(kernel_event[i]);
+//     printf("Kernel time (device %d): %0.3f ms\n", i, double(time_ns) * 1e-6);
+//   }
+
+//   // Release all events.
+//   for(unsigned i = 0; i < num_devices; ++i) {
+//     clReleaseEvent(kernel_event[i]);
+//     clReleaseEvent(finish_event[i]);
+//   }
+
+//   // Verify results.
+//   bool pass = true;
+//   for(unsigned i = 0; i < num_devices && pass; ++i) {
+//     for(unsigned j = 0; j < BATCH_SIZE && pass; ++j) {
+//       if(output[i][j] != ref_output[i][j]) {
+//         printf("Failed verification @ device %d, index %d\nOutput: %f\nReference: %f\n",
+//             i, j, output[i][j], ref_output[i][j]);
+//         pass = false;
+//       }
+//     }
+//   }
+
+//   printf("\nVerification: %s\n", pass ? "PASS" : "FAIL");
+// }
 
 // Free the resources allocated during initialization
 void cleanup() {
   for(unsigned i = 0; i < num_devices; ++i) {
-    if(kernel && kernel[i]) {
-      clReleaseKernel(kernel[i]);
+    if(kernel) {
+      clReleaseKernel(kernel);
     }
-    if(queue && queue[i]) {
-      clReleaseCommandQueue(queue[i]);
+    if(queue) {
+      clReleaseCommandQueue(queue);
     }
-#if USE_SVM_API == 0
-    if(input_a_buf && input_a_buf[i]) {
-      clReleaseMemObject(input_a_buf[i]);
+    if(input_a_buf) {
+      clReleaseMemObject(input_a_buf);
     }
-    if(input_b_buf && input_b_buf[i]) {
-      clReleaseMemObject(input_b_buf[i]);
+    if(input_b_buf) {
+      clReleaseMemObject(input_b_buf);
     }
-    if(output_buf && output_buf[i]) {
-      clReleaseMemObject(output_buf[i]);
+    if(output_buf) {
+      clReleaseMemObject(output_buf);
     }
-#else
-    if(input_a[i].get())
-      input_a[i].reset();
-    if(input_b[i].get())
-      input_b[i].reset();
-    if(output[i].get())
-      output[i].reset();
-#endif /* USE_SVM_API == 0 */
   }
 
   if(program) {

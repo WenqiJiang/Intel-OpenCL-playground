@@ -1,0 +1,8 @@
+Warning: Command has been deprecated. Please use -board=<value> instead of --board <value>
+aoc: Environment checks are completed successfully.
+aoc: Cached files in /var/tmp/aocl/ may be used to reduce compilation time
+You are now compiling the full flow!!
+aoc: Selected target board pac_s10_dc
+aoc: Running OpenCL parser....
+aoc: OpenCL parser completed successfully.
+aoc: Linking Object files....
