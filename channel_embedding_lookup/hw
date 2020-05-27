@@ -20,10 +20,10 @@ Checking if memory usage is larger than 100%
 +----------------------------------------+---------------------------+
 ; Resource                               + Usage                     ;
 +----------------------------------------+---------------------------+
-; Logic utilization                      ;   32%                     ;
-; ALUTs                                  ;   21%                     ;
-; Dedicated logic registers              ;   13%                     ;
-; Memory blocks                          ;   22%                     ;
+; Logic utilization                      ;   23%                     ;
+; ALUTs                                  ;   14%                     ;
+; Dedicated logic registers              ;   10%                     ;
+; Memory blocks                          ;    7%                     ;
 ; DSP blocks                             ;    0%                     ;
 +----------------------------------------+---------------------------;
 aoc: First stage compilation completed successfully.

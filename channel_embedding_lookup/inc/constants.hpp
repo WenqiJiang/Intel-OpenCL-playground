@@ -1,0 +1,30 @@
+#pragma once
+
+#define TABLE_SIZE_0 1000
+#define TABLE_SIZE_1 5000
+#define TABLE_SIZE_2 10000
+
+#define DATA_SIZE_0 4
+#define DATA_SIZE_1 8
+#define DATA_SIZE_2 16
+
+#define VECTOR_START_0 0
+#define VECTOR_START_1 4
+#define VECTOR_START_2 12
+
+#define INPUT_SIZE 28
+
+#define ADDR_START_TABLE_0 0
+#define ADDR_START_TABLE_1 (TABLE_SIZE_0 * DATA_SIZE_0)
+#define ADDR_START_TABLE_2 (ADDR_START_TABLE_1 + TABLE_SIZE_1 * DATA_SIZE_1)
+
+#define BANK_SIZE (TABLE_SIZE_0 * DATA_SIZE_0 + TABLE_SIZE_1 * DATA_SIZE_1 + TABLE_SIZE_2 * DATA_SIZE_2)
+
+
+// #define BATCH_NUM 2
+#define BATCH_NUM 100000
+#define BATCH_SIZE 32
+
+#define FIFO_BATCH 8
+
+typedef int D_TYPE;
